@@ -7,9 +7,10 @@
     android:layout_margin="8dp">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/itemName"
@@ -26,7 +27,20 @@
             android:layout_marginTop="4dp"
             android:scaleType="centerCrop"
             android:src="@drawable/models1" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User" />
+
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/relativeTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time" />
 
 
 </androidx.cardview.widget.CardView>
