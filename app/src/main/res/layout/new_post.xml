@@ -32,15 +32,26 @@
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:text="User" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/etDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="109dp"
+            android:layout_toStartOf="@+id/relativeTime"
+            android:text="Desc" />
 
-    <TextView
-        android:id="@+id/relativeTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time" />
+        <TextView
+            android:id="@+id/relativeTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="82dp"
+            android:text="Time" />
+
+    </RelativeLayout>
 
 
 </androidx.cardview.widget.CardView>
