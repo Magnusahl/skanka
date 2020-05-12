@@ -3,12 +3,12 @@ package com.example.skanka
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
-import io.opencensus.tags.Tag
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.userEmail
+import kotlinx.android.synthetic.main.activity_login.userPassword
+import kotlinx.android.synthetic.main.activity_register.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,11 +35,13 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "Sucess!", Toast.LENGTH_LONG).show()
                     goPostsActivity()
                 } else {
-
                     Toast.makeText(this, "Auth failed", Toast.LENGTH_LONG).show()
-
                 }
             }
+        }
+
+        tv_register.setOnClickListener {
+            goRegisterActivity()
         }
     }
 
@@ -49,4 +51,11 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+    
+    private fun goRegisterActivity() {
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
 }
