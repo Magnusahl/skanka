@@ -6,16 +6,17 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.RelativeLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.skanka.adapters.PostsAdapter
 import com.example.skanka.model.Post
 import com.example.skanka.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_posts.*
+import kotlinx.android.synthetic.main.activity_register.*
+
 private const val TAG = "ProfileActivity"
 const val EXTRA_USERNAME = "EXTRA_USERNAME"
 open class PostsActivity : AppCompatActivity() {
@@ -25,19 +26,19 @@ open class PostsActivity : AppCompatActivity() {
     private lateinit var posts: MutableList<Post>
     private lateinit var adapter: PostsAdapter
 
+    private var gridLayoutManager: GridLayoutManager? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posts)
 
         posts = mutableListOf()
-
         adapter = PostsAdapter(this, posts)
-
         rvPosts.adapter = adapter
-
-        rvPosts.layoutManager =  LinearLayoutManager(this)
-
+        gridLayoutManager = GridLayoutManager(applicationContext, 3, LinearLayoutManager.VERTICAL, false)
+        rvPosts.layoutManager = gridLayoutManager
         firestoreDb = FirebaseFirestore.getInstance()
+
 
         firestoreDb.collection("users")
             .document(FirebaseAuth.getInstance().currentUser?.uid as String)
@@ -50,16 +51,19 @@ open class PostsActivity : AppCompatActivity() {
                 Log.i(TAG,"Failure fetching signed in user", exception)
             }
 
+
         var postsReference = firestoreDb
             .collection("posts")
             .limit(20)
             .orderBy("creation_time_ms", Query.Direction.DESCENDING)
 
-        val username = intent.getStringExtra(EXTRA_USERNAME)
-        if (username != null) {
-            supportActionBar?.title = username
-            postsReference = postsReference.whereEqualTo("user.username", username)
+
+        val user = intent.getStringExtra(EXTRA_USERNAME)
+        if (user != null) {
+            supportActionBar?.title = user
+            postsReference = postsReference.whereEqualTo("user.username", user)
         }
+
 
         postsReference.addSnapshotListener { snapshot, exception ->
             if (exception != null || snapshot == null) {
@@ -88,7 +92,7 @@ open class PostsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_profile) {
             val intent = Intent(this, ProfileActivity::class.java)
-            intent.putExtra(EXTRA_USERNAME, signedInUser?.username )
+            intent.putExtra(EXTRA_USERNAME, signedInUser?.userName)
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)

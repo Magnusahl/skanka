@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         buttonLogin.setOnClickListener {
-            buttonLogin.isEnabled = false
+            //buttonLogin.isEnabled = false
             val email = userEmail.text.toString()
             val password = userPassword.text.toString()
             if (email.isBlank() || password.isBlank()) {
@@ -51,11 +51,10 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-    
+
     private fun goRegisterActivity() {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
-        finish()
     }
 
 }

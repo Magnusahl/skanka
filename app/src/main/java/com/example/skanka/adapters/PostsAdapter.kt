@@ -1,4 +1,4 @@
-package com.example.skanka
+package com.example.skanka.adapters
 
 import android.content.Context
 import android.text.format.DateUtils
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.skanka.R
 import com.example.skanka.model.Post
 import kotlinx.android.synthetic.main.new_post.view.*
 
@@ -27,7 +28,7 @@ class PostsAdapter (val context: Context, val posts: List<Post>) :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(post: Post) {
-            itemView.username.text = post.user?.username
+            itemView.tvusername.text = post.user?.userName
             itemView.itemName.text = post.description
             Glide.with(context).load(post.imageUrl).into(itemView.itemImage)
             itemView.relativeTime.text = DateUtils.getRelativeTimeSpanString(post.creationTimeMs)

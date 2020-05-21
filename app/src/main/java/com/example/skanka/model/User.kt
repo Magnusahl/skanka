@@ -1,3 +1,10 @@
 package com.example.skanka.model
 
-data class User(var username: String = "", var phonenumber: Int = 0)
+data class User (
+    //var uid: String = "",
+    var userName: String = ""
+    //var profileImageUrl: String
+
+)
+
+

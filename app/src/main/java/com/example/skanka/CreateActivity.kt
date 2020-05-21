@@ -2,20 +2,18 @@ package com.example.skanka
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.example.skanka.model.Post
 import com.example.skanka.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -23,11 +21,11 @@ import kotlinx.android.synthetic.main.activity_create.*
 import java.io.File
 
 private const val TAG = "ProfileActivity"
-private const val REQUEST_CODE = 1234
+private const val PICK_PHOTO_CODE = 1234
 
 //For the camera file
-private lateinit var photoFile: File
-private const val FILE_NAME = "photo.jpg"
+//private lateinit var photoFile: File
+//private const val FILE_NAME = "photo.jpg"
 
 class CreateActivity : AppCompatActivity() {
     private var photoUri: Uri? = null
@@ -48,21 +46,21 @@ class CreateActivity : AppCompatActivity() {
                 signedInUser = userSnapshot.toObject(User::class.java)
                 println("Signed in user: $signedInUser")
             }
-            .addOnFailureListener{ exception ->
-                Log.i(TAG,"Failure fetching signed in user", exception)
+            .addOnFailureListener { exception ->
+                Log.i(TAG, "Failure fetching signed in user", exception)
             }
 
-        //btnPickImage.setOnClickListener {
-          //  Log.i(TAG, "Open up image picker on device")
-            //val imagePickerIntent = Intent(Intent.ACTION_GET_CONTENT)
-            //imagePickerIntent.type = "image/*"
-            //if (imagePickerIntent.resolveActivity(packageManager) != null) {
-            //    startActivityForResult(imagePickerIntent, PICK_PHOTO_CODE)
-            //}
-        //}
+        btnPickImage.setOnClickListener {
+            Log.i(TAG, "Open up image picker on device")
+            val imagePickerIntent = Intent(Intent.ACTION_GET_CONTENT)
+            imagePickerIntent.type = "image/*"
+            if (imagePickerIntent.resolveActivity(packageManager) != null) {
+                startActivityForResult(imagePickerIntent, PICK_PHOTO_CODE)
+            }
+        }
 
         //Take a picture
-        btnPickImage.setOnClickListener {
+        /*btnPickImage.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             photoFile = getPhotoFile(FILE_NAME)
 
@@ -75,20 +73,21 @@ class CreateActivity : AppCompatActivity() {
                 Toast.makeText(this, "Unable to open camera", Toast.LENGTH_LONG).show()
             }
         }
-
+*/
 
         btnSubmit.setOnClickListener {
             handleSubmitButtonClick()
         }
     }
 
+    /*
     private fun getPhotoFile(fileName: String): File {
         val storageDirecectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(fileName, ".jpg", storageDirecectory)
     }
-
+*/
     private fun handleSubmitButtonClick() {
-        if (photoFile == null) {
+        if (photoUri == null) {
             Toast.makeText(this, "No photo selected", Toast.LENGTH_LONG).show()
             return
         }
@@ -102,23 +101,26 @@ class CreateActivity : AppCompatActivity() {
         }
 
         btnSubmit.isEnabled = false
-        val photoUploadUri = photoFile as Uri
-        val photoReference = storageReference.child("images/${System.currentTimeMillis()}-photo.jpg}")
+        val photoUploadUri = photoUri as Uri
+        val photoReference =
+            storageReference.child("images/${System.currentTimeMillis()}-photo.jpg}")
         //Upload photo to Firebase storage
         photoReference.putFile(photoUploadUri)
-            .continueWithTask{ photoUploadTask ->
+            .continueWithTask { photoUploadTask ->
                 Log.i(TAG, "upload bytes: ${photoUploadTask.result?.bytesTransferred}")
                 //Retrive image url of the uploaded image
                 photoReference.downloadUrl
             }.continueWithTask { downloadUrlTask ->
+
                 //Create a post object
                 val post = Post(
                     etDescription.text.toString(),
                     downloadUrlTask.result.toString(),
                     System.currentTimeMillis(),
-                    signedInUser)
+                    signedInUser
+                )
                 firestoreDb.collection("posts").add(post)
-            }.addOnCompleteListener{ postCreationTask ->
+            }.addOnCompleteListener { postCreationTask ->
                 btnSubmit.isEnabled = true
                 if (!postCreationTask.isSuccessful) {
                     Log.e(TAG, "Exception during Firebase operations", postCreationTask.exception)
@@ -127,23 +129,26 @@ class CreateActivity : AppCompatActivity() {
                 etDescription.text.clear()
                 imageView.setImageResource(0)
                 Toast.makeText(this, "Success!", Toast.LENGTH_LONG).show()
-                val profileIntent = Intent(this, ProfileActivity::class.java)
-                profileIntent.putExtra(EXTRA_USERNAME, signedInUser?.username)
+                val profileIntent = Intent(this, PostsActivity::class.java)
+                profileIntent.putExtra(EXTRA_USERNAME, signedInUser?.userName)
                 startActivity(profileIntent)
                 finish()
             }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            //val takenImage = data?.extras?.get("data") as Bitmap
-            val takenImage = BitmapFactory.decodeFile(photoFile.absolutePath)
-            imageView.setImageBitmap(takenImage)
+        if (requestCode == PICK_PHOTO_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                photoUri = data?.data
+                Log.i(TAG, "photouri $photoUri")
+                imageView.setImageURI(photoUri)
             } else {
-                super.onActivityResult(requestCode, resultCode, data)
+                Toast.makeText(this, "Image picker action canceled", Toast.LENGTH_LONG).show()
             }
         }
     }
+}
 
 
