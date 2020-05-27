@@ -22,16 +22,6 @@
             android:src="@drawable/models1" />
 
         <TextView
-            android:id="@+id/itemName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@android:color/black"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="35dp"
-            android:text="Car" />
-
-        <TextView
             android:id="@+id/tvusername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,22 +30,23 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
-            android:id="@+id/etDescription"
+            android:id="@+id/relativeTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="10dp"
+            android:text="Time" />
+
+        <TextView
+            android:id="@+id/etHeadLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="75dp"
+            android:textStyle="bold"
+            android:text="HeadLine" />
 
-            android:text="Desc" />
 
-        <TextView
-            android:id="@+id/relativeTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="75dp"
-            android:layout_marginLeft="50dp"
-            android:text="Time" />
 
     </RelativeLayout>
 

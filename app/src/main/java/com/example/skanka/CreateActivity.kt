@@ -2,15 +2,11 @@ package com.example.skanka
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
 import com.example.skanka.model.Post
 import com.example.skanka.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -18,7 +14,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_create.*
-import java.io.File
 
 private const val TAG = "ProfileActivity"
 private const val PICK_PHOTO_CODE = 1234
@@ -114,6 +109,7 @@ class CreateActivity : AppCompatActivity() {
 
                 //Create a post object
                 val post = Post(
+                    etHeadLine.text.toString(),
                     etDescription.text.toString(),
                     downloadUrlTask.result.toString(),
                     System.currentTimeMillis(),

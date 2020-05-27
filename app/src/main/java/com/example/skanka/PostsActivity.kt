@@ -14,12 +14,13 @@ import com.example.skanka.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.activity_create.*
 import kotlinx.android.synthetic.main.activity_posts.*
 import kotlinx.android.synthetic.main.activity_register.*
 
 private const val TAG = "ProfileActivity"
 const val EXTRA_USERNAME = "EXTRA_USERNAME"
-open class PostsActivity : AppCompatActivity() {
+open class PostsActivity : AppCompatActivity(), PostsAdapter.OnItemClickListener {
 
     private var signedInUser: User? = null
     private lateinit var firestoreDb: FirebaseFirestore
@@ -28,14 +29,22 @@ open class PostsActivity : AppCompatActivity() {
 
     private var gridLayoutManager: GridLayoutManager? = null
 
+    //Pass the data from recyclerview in to the detail activity view
+    override fun onItemClick(post: Post) {
+        var intent = Intent(this@PostsActivity,DescActivity::class.java)
+
+        startActivity(intent)
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posts)
 
         posts = mutableListOf()
-        adapter = PostsAdapter(this, posts)
+        adapter = PostsAdapter(this ,posts, this)
         rvPosts.adapter = adapter
-        gridLayoutManager = GridLayoutManager(applicationContext, 3, LinearLayoutManager.VERTICAL, false)
+        gridLayoutManager = GridLayoutManager(applicationContext, 2, LinearLayoutManager.VERTICAL, false)
         rvPosts.layoutManager = gridLayoutManager
         firestoreDb = FirebaseFirestore.getInstance()
 
@@ -57,7 +66,7 @@ open class PostsActivity : AppCompatActivity() {
             .limit(20)
             .orderBy("creation_time_ms", Query.Direction.DESCENDING)
 
-
+        //Show user profile name
         val user = intent.getStringExtra(EXTRA_USERNAME)
         if (user != null) {
             supportActionBar?.title = user
