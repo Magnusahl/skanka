@@ -113,7 +113,8 @@ class CreateActivity : AppCompatActivity() {
                     etDescription.text.toString(),
                     downloadUrlTask.result.toString(),
                     System.currentTimeMillis(),
-                    signedInUser
+                    signedInUser,
+                    documentId = ""
                 )
                 firestoreDb.collection("posts").add(post)
             }.addOnCompleteListener { postCreationTask ->
@@ -126,7 +127,7 @@ class CreateActivity : AppCompatActivity() {
                 imageView.setImageResource(0)
                 Toast.makeText(this, "Success!", Toast.LENGTH_LONG).show()
                 val profileIntent = Intent(this, PostsActivity::class.java)
-                profileIntent.putExtra(EXTRA_USERNAME, signedInUser?.userName)
+                //profileIntent.putExtra(EXTRA_USERNAME, signedInUser?.userName)
                 startActivity(profileIntent)
                 finish()
             }

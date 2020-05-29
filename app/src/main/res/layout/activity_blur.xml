@@ -14,7 +14,7 @@
         android:src="@drawable/models1" />
 
     <TextView
-        android:id="@+id/etDescHeadLine"
+        android:id="@+id/etHeadLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -23,7 +23,7 @@
         android:hint="HeadLine" />
 
     <TextView
-        android:id="@+id/etDescDescription"
+        android:id="@+id/etDescription"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="25"
@@ -40,16 +40,7 @@
         android:layout_marginLeft="165dp"
         android:text="Get" />
 
-    <TextView
-        android:id="@+id/tvDescUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="165dp"
-        android:text="User"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
     <Button
-        android:id="@+id/btnDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Delete" />
