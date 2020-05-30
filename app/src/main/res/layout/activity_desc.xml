@@ -33,12 +33,12 @@
         android:ems="10"
         android:hint="Description" />
 
-    <CheckBox
-        android:id="@+id/cbGet"
+    <Button
+        android:id="@+id/btnGet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="165dp"
-        android:text="Get" />
+        android:text="Hämta"
+        />
 
     <TextView
         android:id="@+id/tvDescUsername"
@@ -52,6 +52,6 @@
         android:id="@+id/btnDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete" />
+        android:text="Ta bort" />
 
 </LinearLayout>

@@ -60,7 +60,7 @@ open class PostsActivity : AppCompatActivity(), PostsAdapter.OnItemClickListener
                 Log.i(TAG,"Failure fetching signed in user", exception)
             }
 
-
+        //Order posts by creating time
         var postsReference = firestoreDb
             .collection("posts")
             .limit(20)
@@ -70,10 +70,10 @@ open class PostsActivity : AppCompatActivity(), PostsAdapter.OnItemClickListener
         val user = intent.getStringExtra(EXTRA_USERNAME)
         if (user != null) {
             supportActionBar?.title = user
-            postsReference = postsReference.whereEqualTo("user.username", user)
+            postsReference = postsReference.whereEqualTo("user.userName", user)
         }
 
-
+        //Show posts in a list
         postsReference.addSnapshotListener { snapshot, exception ->
             if (exception != null || snapshot == null) {
                 return@addSnapshotListener
@@ -87,11 +87,13 @@ open class PostsActivity : AppCompatActivity(), PostsAdapter.OnItemClickListener
             }
         }
 
+        //FAB button to the create activity
         fabCreate.setOnClickListener{
             val intent = Intent( this, CreateActivity::class.java)
             startActivity(intent)
         }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_posts, menu)
