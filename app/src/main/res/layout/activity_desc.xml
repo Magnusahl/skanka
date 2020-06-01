@@ -11,7 +11,7 @@
         android:layout_weight="70"
         android:id="@+id/itemImage"
         android:scaleType="centerCrop"
-        android:src="@drawable/models1" />
+         />
 
     <TextView
         android:id="@+id/etDescHeadLine"
@@ -35,9 +35,17 @@
 
     <Button
         android:id="@+id/btnGet"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hämta"
+        />
+
+    <Button
+        android:id="@+id/btnUndo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="145dp"
+        android:text="Ångra"
         />
 
     <TextView
@@ -45,7 +53,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="165dp"
-        android:text="User"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <Button

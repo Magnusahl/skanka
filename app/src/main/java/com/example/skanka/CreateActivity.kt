@@ -114,7 +114,8 @@ class CreateActivity : AppCompatActivity() {
                     downloadUrlTask.result.toString(),
                     System.currentTimeMillis(),
                     signedInUser,
-                    documentId = ""
+                    documentId = "",
+                    taken = ""
                 )
                 firestoreDb.collection("posts").add(post)
             }.addOnCompleteListener { postCreationTask ->

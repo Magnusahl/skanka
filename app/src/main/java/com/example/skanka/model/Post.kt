@@ -13,5 +13,6 @@ data class Post(
     @get:PropertyName("creation_time_ms") @set:PropertyName("creation_time_ms") var creationTimeMs: Long = 0,
     var user: User? = null,
     @DocumentId
-    var documentId: String = ""
+    var documentId: String = "",
+    var taken: String = ""
 )
