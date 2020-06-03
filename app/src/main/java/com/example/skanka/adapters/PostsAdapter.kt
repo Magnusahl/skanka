@@ -32,7 +32,7 @@ class PostsAdapter (val context: Context, val posts: List<Post>, var itemClickLi
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(post: Post, clickListener: OnItemClickListener) {
-            itemView.tvusername.text = post.user?.userName
+            //itemView.tvusername.text = post.user?.userName
             itemView.etHeadLine.text = post.headline
             Glide.with(context).load(post.imageUrl).into(itemView.itemImage)
             itemView.relativeTime.text = DateUtils.getRelativeTimeSpanString(post.creationTimeMs)

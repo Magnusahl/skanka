@@ -9,7 +9,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="vertical">
 
         <ImageView
@@ -22,14 +21,12 @@
             android:src="@drawable/models1" />
 
         <TextView
-            android:id="@+id/tvusername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="User"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/relativeTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,14 +34,28 @@
             android:layout_marginLeft="10dp"
             android:text="Time" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/etHeadLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="75dp"
+
+            android:textSize="25dp"
+            android:textColor="@android:color/white"
             android:textStyle="bold"
+            android:fontFamily="monospace"
             android:text="HeadLine" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/etTaken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="30dp"
+            android:textSize="40dp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            />
 
 
 

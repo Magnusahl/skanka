@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">skanka</string>
+    <string name="app_title">Skänka</string>
+    <string name="create_activity">Skapa annons</string>
+    <string name="post_activity">Annonser</string>
+    <string name="et_desc_headline">Rubrik</string>
+    <string name="register_activity">Registrera konto</string>
 </resources>

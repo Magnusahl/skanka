@@ -86,7 +86,7 @@ class CreateActivity : AppCompatActivity() {
             Toast.makeText(this, "No photo selected", Toast.LENGTH_LONG).show()
             return
         }
-        if (etDescription.text.isBlank()) {
+        if (etDescription.text!!.isBlank()) {
             Toast.makeText(this, "Description cannot be empty", Toast.LENGTH_LONG).show()
             return
         }
@@ -124,7 +124,7 @@ class CreateActivity : AppCompatActivity() {
                     Log.e(TAG, "Exception during Firebase operations", postCreationTask.exception)
                     Toast.makeText(this, "Failed to save post", Toast.LENGTH_LONG).show()
                 }
-                etDescription.text.clear()
+                etDescription.text!!.clear()
                 imageView.setImageResource(0)
                 Toast.makeText(this, "Success!", Toast.LENGTH_LONG).show()
                 val profileIntent = Intent(this, PostsActivity::class.java)

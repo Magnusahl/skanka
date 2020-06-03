@@ -33,13 +33,14 @@ class RegisterActivity : AppCompatActivity() {
             performRegister()
         }
 
-        //Select image for the register user
-        btn_image_select.setOnClickListener {
 
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent, 0)
-        }
+        //Select image for the register user
+        //btn_image_select.setOnClickListener {
+
+          //  val intent = Intent(Intent.ACTION_PICK)
+            //intent.type = "image/*"
+            //startActivityForResult(intent, 0)
+        //}
     }
 
     var selectedPhotoUri: Uri? = null
@@ -52,7 +53,7 @@ class RegisterActivity : AppCompatActivity() {
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
             //btn_image_select.setImageBitmap(bitmap)
-            btn_image_select.alpha = 0f
+            //btn_image_select.alpha = 0f
 
             //val bitmapDrawable = BitmapDrawable(bitmap)
             //btn_image_select.setBackgroundDrawable(bitmapDrawable)

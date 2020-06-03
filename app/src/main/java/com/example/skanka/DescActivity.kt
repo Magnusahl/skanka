@@ -28,37 +28,25 @@ private lateinit var firestoreDb: FirebaseFirestore
 private var signedInUser: User? = null
 
 class DescActivity : AppCompatActivity() {
+   private val firestoreDb = getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_desc)
-        firestoreDb = getInstance()
 
         //DocumentId containing all of below information
         val documentId = intent.getStringExtra("DocumentId")
 
-
-        fun textGet(post: Post) {
-            val etDescHeadLine: TextView = findViewById(R.id.etDescHeadLine)
-            etDescHeadLine.text = post?.headline
-
-            val etDescription: TextView = findViewById(R.id.etDescDescription)
-            etDescription.text = post?.description
-        }
-
-        fun loadImageUrl(post: Post) {
-            val imageurl = post.imageUrl
-            //Glide Image
-            Glide.with(this)
-                .load(imageurl)
-                .into(itemImage)
-        }
-
-        //USER SELECT A POST
-        fun userTaken(post: Post) {
+        //Mark the post taken
+        fun userTaken() {
             btnGet.setOnClickListener {
                 val tvDescUsername: TextView = findViewById(R.id.tvDescUsername)
-                tvDescUsername.text = post.user.toString()
+                tvDescUsername.text = "Bokad för hämtning"
+
+                btnUndo.visibility = View.VISIBLE
+                btnGet.visibility = View.INVISIBLE
+
 
                 firestoreDb.collection("posts")
                     .document(documentId)
@@ -68,49 +56,46 @@ class DescActivity : AppCompatActivity() {
             }
         }
 
-
         //Post loaded from Postactivity
-            firestoreDb.collection("posts")
-                .document(documentId)
-                .get().addOnSuccessListener { document ->
-                    if (document != null) {
-                        val post = document.toObject(Post::class.java)
-                        //Get Headline and description
-                        textGet(post!!)
-                        //Get imageUrl
-                        loadImageUrl(post)
+        firestoreDb.collection("posts")
+            .document(documentId)
+            .get().addOnSuccessListener { document ->
+                if (document != null) {
+                    val post = document.toObject(Post::class.java)
+                    //Get Headline and description
+                    textGet(post!!)
+                    //Get imageUrl
+                    loadImageUrl(post)
+                    userTaken()
 
-                        userTaken(post)
+                    firestoreDb.collection("users")
+                        .document(FirebaseAuth.getInstance().currentUser?.uid as String)
+                        .get()
+                        .addOnSuccessListener { userSnapshot ->
+                            signedInUser = userSnapshot.toObject(User::class.java)
 
-                        //Show delete button
-                        if (signedInUser!! == post.user) {
-                            btnDelete.setVisibility(View.VISIBLE)
-                        } else {
-                            btnDelete.setVisibility(View.INVISIBLE)
+                            if (signedInUser == post.user) {
+                                btnDelete.visibility = View.VISIBLE
+                            } else {
+                                btnDelete.visibility = View.INVISIBLE
+                            }
+
+                            //Load User to select post and write to firebase taken
+                            if (post.taken.isEmpty()) {
+                                val tvDescUsername: TextView = findViewById(R.id.tvDescUsername)
+                                tvDescUsername.text = ""
+                                btnGet.visibility = View.VISIBLE
+                            } else {
+                                val tvDescUsername: TextView = findViewById(R.id.tvDescUsername)
+                                tvDescUsername.text = "Bokad för hämtning"
+                                btnUndo.visibility = View.VISIBLE
+                                btnGet.visibility = View.INVISIBLE
+                            }
                         }
-                    }
                 }
-
-
-
-
-        btnUndo.setOnClickListener {
-            val tvDescUsername: TextView = findViewById(R.id.tvDescUsername)
-            tvDescUsername.text = ""
-        }
-
-
-        //Load User to select post and write to firebase taken
-        firestoreDb.collection("users")
-            .document(FirebaseAuth.getInstance().currentUser?.uid as String)
-            .get()
-            .addOnSuccessListener { userSnapshot ->
-                signedInUser = userSnapshot.toObject(User::class.java)
-
-                //updatePostTaken()
-
             }
 
+        btnUndo.visibility = View.INVISIBLE
 
         //DELETE POST
         fun deleteData() {
@@ -125,6 +110,37 @@ class DescActivity : AppCompatActivity() {
             finish()
             Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show()
         }
+
+
+
+        btnUndo.setOnClickListener {
+            firestoreDb.collection("posts")
+                .document(documentId)
+                .update("taken", "")
+
+            btnUndo.visibility = View.INVISIBLE
+            btnGet.visibility = View.VISIBLE
+
+            val tvDescUsername: TextView = findViewById(R.id.tvDescUsername)
+            tvDescUsername.text = ""
+        }
     }
 
+    //Load image from post activity
+    private fun loadImageUrl(post: Post) {
+        val imageurl = post.imageUrl
+        //Glide Image
+        Glide.with(this)
+            .load(imageurl)
+            .into(itemImage)
+    }
+
+    //Get the Headline and description from post activity
+    private fun textGet(post: Post) {
+        val etDescHeadLine: TextView = findViewById(R.id.etDescHeadLine)
+        etDescHeadLine.text = post.headline
+
+        val etDescription: TextView = findViewById(R.id.etDescDescription)
+        etDescription.text = post.description
+    }
 }

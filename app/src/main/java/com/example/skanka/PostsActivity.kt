@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.activity_desc.*
 import kotlinx.android.synthetic.main.activity_posts.*
 
 private const val TAG = "ProfileActivity"
@@ -25,13 +28,11 @@ open class PostsActivity : AppCompatActivity(), PostsAdapter.OnItemClickListener
     private lateinit var firestoreDb: FirebaseFirestore
     private lateinit var posts: MutableList<Post>
     private lateinit var adapter: PostsAdapter
-
     private var gridLayoutManager: GridLayoutManager? = null
-
 
     //Pass the data from recyclerview in to the detail activity view
     override fun onItemClick(post: Post) {
-        var intent = Intent(this@PostsActivity,DescActivity::class.java)
+        val intent = Intent(this@PostsActivity,DescActivity::class.java)
         intent.putExtra("DocumentId", post.documentId)
         startActivity(intent)
     }
@@ -47,7 +48,6 @@ open class PostsActivity : AppCompatActivity(), PostsAdapter.OnItemClickListener
         gridLayoutManager = GridLayoutManager(applicationContext, 2, LinearLayoutManager.VERTICAL, false)
         rvPosts.layoutManager = gridLayoutManager
         firestoreDb = FirebaseFirestore.getInstance()
-
 
         firestoreDb.collection("users")
             .document(FirebaseAuth.getInstance().currentUser?.uid as String)

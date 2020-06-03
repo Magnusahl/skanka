@@ -5,7 +5,6 @@ import android.os.Parcelable
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.PropertyName
 import java.io.Serializable
-
 data class Post(
     var headline: String = "",
     var description: String = "",
