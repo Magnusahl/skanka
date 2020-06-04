@@ -8,19 +8,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/itemImage"
             android:layout_width="wrap_content"
             android:layout_height="120dp"
+            android:layout_margin="5dp"
             android:layout_marginTop="4dp"
             android:scaleType="centerCrop"
-            android:layout_margin="5dp"
             android:src="@drawable/models1" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -30,8 +30,8 @@
             android:id="@+id/relativeTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="100dp"
             android:text="Time" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -39,12 +39,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-
-            android:textSize="25dp"
+            android:text="HeadLine"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:fontFamily="monospace"
-            android:text="HeadLine" />
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/etTaken"
@@ -52,12 +50,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="30dp"
-            android:textSize="40dp"
             android:textAllCaps="true"
-            android:textStyle="bold"
-            />
-
-
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

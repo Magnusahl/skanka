@@ -30,7 +30,7 @@ open class PostsActivity : AppCompatActivity(), PostsAdapter.OnItemClickListener
     private lateinit var adapter: PostsAdapter
     private var gridLayoutManager: GridLayoutManager? = null
 
-    //Pass the data from recyclerview in to the detail activity view
+    //Pass the data from adapter in to the detail activity view
     override fun onItemClick(post: Post) {
         val intent = Intent(this@PostsActivity,DescActivity::class.java)
         intent.putExtra("DocumentId", post.documentId)
@@ -45,10 +45,12 @@ open class PostsActivity : AppCompatActivity(), PostsAdapter.OnItemClickListener
         posts = mutableListOf()
         adapter = PostsAdapter(this ,posts, this)
         rvPosts.adapter = adapter
+        //Order the posts in a grid
         gridLayoutManager = GridLayoutManager(applicationContext, 2, LinearLayoutManager.VERTICAL, false)
         rvPosts.layoutManager = gridLayoutManager
         firestoreDb = FirebaseFirestore.getInstance()
 
+        //Sign in user
         firestoreDb.collection("users")
             .document(FirebaseAuth.getInstance().currentUser?.uid as String)
             .get()
@@ -63,7 +65,7 @@ open class PostsActivity : AppCompatActivity(), PostsAdapter.OnItemClickListener
         //Order posts by creating time
         var postsReference = firestoreDb
             .collection("posts")
-            .limit(20)
+            //.limit(20)
             .orderBy("creation_time_ms", Query.Direction.DESCENDING)
 
         //Show user profile name
@@ -103,6 +105,7 @@ open class PostsActivity : AppCompatActivity(), PostsAdapter.OnItemClickListener
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_profile) {
             val intent = Intent(this, ProfileActivity::class.java)
+            //See signed in users username
             intent.putExtra(EXTRA_USERNAME, signedInUser?.userName)
             startActivity(intent)
         }

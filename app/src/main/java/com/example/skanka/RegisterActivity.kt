@@ -32,17 +32,9 @@ class RegisterActivity : AppCompatActivity() {
         btn_register.setOnClickListener {
             performRegister()
         }
-
-
-        //Select image for the register user
-        //btn_image_select.setOnClickListener {
-
-          //  val intent = Intent(Intent.ACTION_PICK)
-            //intent.type = "image/*"
-            //startActivityForResult(intent, 0)
-        //}
     }
 
+    /*
     var selectedPhotoUri: Uri? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -60,13 +52,16 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+     */
+
+    //Create the user
     private fun performRegister() {
         val emailreg = userEmail.text.toString()
         val passwordreg = userPassword.text.toString()
         val username = userName.text.toString()
 
         if (emailreg.isEmpty() && passwordreg.isEmpty() && username.isEmpty() ) {
-            Toast.makeText(this, "Please enter in email/pw/username", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Skriv in en giltig epostadress och lösenord", Toast.LENGTH_LONG).show()
             return
         }
 
@@ -79,51 +74,17 @@ class RegisterActivity : AppCompatActivity() {
                     firestoreDB = FirebaseFirestore.getInstance()
                     firestoreDB.collection("users").document(uid).set(username)
                     startActivity(Intent(this, LoginActivity::class.java))
-                    Toast.makeText(this, "Successfully registered", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Användare registrerad", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(this, "Error, try again", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Fel!, försök igen", Toast.LENGTH_LONG).show()
                 }
-
-                //uploadImageToFirebaseStorage()
             }
 
             .addOnFailureListener {
-                Toast.makeText(this, "Please enter a correct email/pw", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Skriv in en giltig epostadress", Toast.LENGTH_LONG).show()
             }
 
     }
-/*
-    private fun uploadImageToFirebaseStorage() {
-        if (selectedPhotoUri == null) return
-
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/profileimg/$filename")
-
-        ref.putFile(selectedPhotoUri!!)
-            .addOnSuccessListener {
-                Log.d("Register", "Success: ${it.metadata?.path}")
-
-                saveUserToFirebase(it.toString())
-            }
-    }
-
-    private fun saveUserToFirebase(profileImageUrl: String = "") {
-        val uid = FirebaseAuth.getInstance().uid ?: ""
-        val ref = FirebaseDatabase.getInstance().getReference("users/$uid")
-
-        val user = User(uid, userName.text.toString(), profileImageUrl)
-
-        ref.setValue(user)
-            .addOnSuccessListener {
-                val intent = Intent(this, PostsActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            }
-    }
-
- */
-
-
 }
 
 

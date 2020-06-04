@@ -17,25 +17,24 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         val auth = FirebaseAuth.getInstance()
         if (auth.currentUser != null) {
+            //When a user is logged in go to Post activity
             goPostsActivity()
         }
 
         buttonLogin.setOnClickListener {
-            //buttonLogin.isEnabled = false
             val email = userEmail.text.toString()
             val password = userPassword.text.toString()
             if (email.isBlank() || password.isBlank()) {
-                Toast.makeText(this, "Email/password cannot be empty", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Epost/Lösenord måste fyllas i", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             // Firebase auth check
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 buttonLogin.isEnabled = true
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Sucess!", Toast.LENGTH_LONG).show()
                     goPostsActivity()
                 } else {
-                    Toast.makeText(this, "Auth failed", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Registreringen misslyckades", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -45,13 +44,14 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    //Go to Post activity
     private fun goPostsActivity() {
-
         val intent = Intent(this, PostsActivity::class.java)
         startActivity(intent)
         finish()
     }
 
+    //Go to Register activity
     private fun goRegisterActivity() {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)

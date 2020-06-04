@@ -1,14 +1,12 @@
 package com.example.skanka.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.skanka.DescActivity
 import com.example.skanka.R
 import com.example.skanka.model.Post
 import kotlinx.android.synthetic.main.new_post.view.*
@@ -23,7 +21,6 @@ class PostsAdapter (val context: Context, val posts: List<Post>, var itemClickLi
 
     override fun getItemCount() = posts.size
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(posts[position], itemClickListener)
 
@@ -32,10 +29,11 @@ class PostsAdapter (val context: Context, val posts: List<Post>, var itemClickLi
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(post: Post, clickListener: OnItemClickListener) {
-            //itemView.tvusername.text = post.user?.userName
+            //Show headline, image and time in the recyclerview
             itemView.etHeadLine.text = post.headline
             Glide.with(context).load(post.imageUrl).into(itemView.itemImage)
             itemView.relativeTime.text = DateUtils.getRelativeTimeSpanString(post.creationTimeMs)
+            //When user clicks on a post go to desc activity
             itemView.setOnClickListener {
                 clickListener.onItemClick(post)
             }
@@ -45,5 +43,4 @@ class PostsAdapter (val context: Context, val posts: List<Post>, var itemClickLi
     interface OnItemClickListener{
         fun onItemClick(post:Post)
     }
-
 }

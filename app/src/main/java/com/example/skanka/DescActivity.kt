@@ -1,30 +1,20 @@
 package com.example.skanka
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import android.widget.CheckBox
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.example.skanka.model.Post
 import com.example.skanka.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestore.getInstance
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.activity_create.*
 import kotlinx.android.synthetic.main.activity_desc.*
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.new_post.*
-import kotlinx.android.synthetic.main.new_post.etHeadLine
-import kotlinx.android.synthetic.main.new_post.view.*
 import kotlinx.android.synthetic.main.activity_desc.itemImage as itemImage1
 
-private lateinit var firestoreDb: FirebaseFirestore
 private var signedInUser: User? = null
 
 class DescActivity : AppCompatActivity() {
@@ -108,9 +98,8 @@ class DescActivity : AppCompatActivity() {
         btnDelete.setOnClickListener {
             deleteData()
             finish()
-            Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Raderad", Toast.LENGTH_SHORT).show()
         }
-
 
 
         btnUndo.setOnClickListener {

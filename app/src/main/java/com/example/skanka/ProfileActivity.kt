@@ -6,14 +6,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
-
+//Mirror the Post activity in Profile activity
 class ProfileActivity : PostsActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_profile, menu)
         return true
     }
-
+    //Show logout button
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_logout) {
             FirebaseAuth.getInstance().signOut()

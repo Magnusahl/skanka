@@ -18,10 +18,6 @@ import kotlinx.android.synthetic.main.activity_create.*
 private const val TAG = "ProfileActivity"
 private const val PICK_PHOTO_CODE = 1234
 
-//For the camera file
-//private lateinit var photoFile: File
-//private const val FILE_NAME = "photo.jpg"
-
 class CreateActivity : AppCompatActivity() {
     private var photoUri: Uri? = null
     private var signedInUser: User? = null
@@ -45,6 +41,7 @@ class CreateActivity : AppCompatActivity() {
                 Log.i(TAG, "Failure fetching signed in user", exception)
             }
 
+        //User can choose a image
         btnPickImage.setOnClickListener {
             Log.i(TAG, "Open up image picker on device")
             val imagePickerIntent = Intent(Intent.ACTION_GET_CONTENT)
@@ -54,40 +51,20 @@ class CreateActivity : AppCompatActivity() {
             }
         }
 
-        //Take a picture
-        /*btnPickImage.setOnClickListener {
-            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            photoFile = getPhotoFile(FILE_NAME)
-
-            val fileProvider = FileProvider.getUriForFile(this, "com.example.skanka.fileprovider", photoFile)
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
-
-            if (takePictureIntent.resolveActivity(this.packageManager) != null) {
-                startActivityForResult(takePictureIntent, REQUEST_CODE)
-            } else {
-                Toast.makeText(this, "Unable to open camera", Toast.LENGTH_LONG).show()
-            }
-        }
-*/
-
+        //Creates the post
         btnSubmit.setOnClickListener {
             handleSubmitButtonClick()
         }
     }
 
-    /*
-    private fun getPhotoFile(fileName: String): File {
-        val storageDirecectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(fileName, ".jpg", storageDirecectory)
-    }
-*/
+    //Send back msg if the user dosent fill in all of the required fields
     private fun handleSubmitButtonClick() {
         if (photoUri == null) {
-            Toast.makeText(this, "No photo selected", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Välj en bild", Toast.LENGTH_LONG).show()
             return
         }
         if (etDescription.text!!.isBlank()) {
-            Toast.makeText(this, "Description cannot be empty", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Beskrivning kan inte vara tom", Toast.LENGTH_LONG).show()
             return
         }
         if (signedInUser == null) {
@@ -126,9 +103,8 @@ class CreateActivity : AppCompatActivity() {
                 }
                 etDescription.text!!.clear()
                 imageView.setImageResource(0)
-                Toast.makeText(this, "Success!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Skänkt!", Toast.LENGTH_LONG).show()
                 val profileIntent = Intent(this, PostsActivity::class.java)
-                //profileIntent.putExtra(EXTRA_USERNAME, signedInUser?.userName)
                 startActivity(profileIntent)
                 finish()
             }
@@ -136,7 +112,7 @@ class CreateActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+        //Save the image from the imageview
         if (requestCode == PICK_PHOTO_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 photoUri = data?.data
