@@ -34,25 +34,6 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    /*
-    var selectedPhotoUri: Uri? = null
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
-            selectedPhotoUri = data.data
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
-
-            //btn_image_select.setImageBitmap(bitmap)
-            //btn_image_select.alpha = 0f
-
-            //val bitmapDrawable = BitmapDrawable(bitmap)
-            //btn_image_select.setBackgroundDrawable(bitmapDrawable)
-        }
-    }
-
-     */
 
     //Create the user
     private fun performRegister() {

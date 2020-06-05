@@ -5,6 +5,6 @@
     <item
         android:id="@+id/menu_profile"
         android:icon="@drawable/ic_person"
-        android:title="Profile"
+        android:title="Profil"
         app:showAsAction="always" />
 </menu>

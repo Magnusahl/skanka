@@ -87,7 +87,7 @@ class DescActivity : AppCompatActivity() {
 
         btnUndo.visibility = View.INVISIBLE
 
-        //DELETE POST
+        //Delete post
         fun deleteData() {
             firestoreDb
                 .collection("posts")

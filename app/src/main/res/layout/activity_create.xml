@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,8 +7,6 @@
     android:layout_height="match_parent">
 
 <androidx.constraintlayout.widget.ConstraintLayout
-
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -33,7 +30,6 @@
         android:layout_width="413dp"
         android:layout_height="309dp"
         android:scaleType="centerCrop"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +55,6 @@
             android:hint="Rubrik"
             tools:layout_editor_absoluteX="56dp"
             tools:layout_editor_absoluteY="473dp" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -82,7 +77,6 @@
             android:hint="Beskriv objektet"
             tools:layout_editor_absoluteX="-6dp"
             tools:layout_editor_absoluteY="556dp" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton

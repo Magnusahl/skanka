@@ -19,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_desc.*
 import kotlinx.android.synthetic.main.activity_posts.*
-
+//For log message
 private const val TAG = "ProfileActivity"
 const val EXTRA_USERNAME = "EXTRA_USERNAME"
 open class PostsActivity : AppCompatActivity(), PostsAdapter.OnItemClickListener {

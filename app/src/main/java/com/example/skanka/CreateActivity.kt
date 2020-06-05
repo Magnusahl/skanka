@@ -118,8 +118,6 @@ class CreateActivity : AppCompatActivity() {
                 photoUri = data?.data
                 Log.i(TAG, "photouri $photoUri")
                 imageView.setImageURI(photoUri)
-            } else {
-                Toast.makeText(this, "Image picker action canceled", Toast.LENGTH_LONG).show()
             }
         }
     }
